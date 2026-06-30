@@ -2,6 +2,7 @@ pub mod enemy;
 pub mod player;
 pub mod score;
 
+use bevy::app::PluginGroupBuilder;
 use bevy::prelude::*;
 use enemy::EnemyPlugin;
 use player::PlayerPlugin;
@@ -12,7 +13,7 @@ pub struct GamePlugins;
 
 impl PluginGroup for GamePlugins {
     fn build(self) -> PluginGroupBuilder {
-        PluginGroupBuilder::new::<Self>()
+        PluginGroupBuilder::start::<Self>()
             .add(PlayerPlugin)
             .add(EnemyPlugin)
             .add(ScorePlugin)

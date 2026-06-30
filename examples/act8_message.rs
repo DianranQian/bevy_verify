@@ -38,8 +38,9 @@ fn score_system(mut reader: MessageReader<PlayerDied>, mut score: ResMut<Score>)
 // Part 5: EntityEvent —— 绑定到特定实体的 Observer
 // ═══════════════════════════════════════════════════════════════════════
 
-#[derive(Event, Debug)]
+#[derive(EntityEvent, Debug)]
 struct EntityDied {
+    entity: Entity,
     points: u32,
 }
 
@@ -50,11 +51,11 @@ fn spawn_entity(mut commands: Commands) {
             Name::new("Enemy"),
             Transform::default(),
         ))
-        .observe(|trigger: Trigger<EntityDied>| {
+        .observe(|on: On<EntityDied>| {
             println!(
                 "Entity died! +{} points → entity: {:?}",
-                trigger.event().points,
-                trigger.entity(),
+                on.event().points,
+                on.observer(),
             );
         });
 }
